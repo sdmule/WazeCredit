@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using WazeCredit.Data;
 using WazeCredit.Middleware;
 using WazeCredit.Service;
@@ -33,6 +34,9 @@ builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
 builder.Services.AddTransient<TransientService>();
 builder.Services.AddScoped<ScopedService>();
 builder.Services.AddSingleton<SingletonService>();
+//TryAdd() - checks whether the implementation for this service is already exist and if exist then it will not register the new implementation
+//TryAdd() is an extension method provided by Microsoft.Extensions.DependencyInjection.Extensions that registers a service only if a service of that type has not already been registered.
+builder.Services.TryAddTransient<IMarketForecaster, MarketForecaster>();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 

@@ -12,9 +12,9 @@ namespace WazeCredit.Controllers
     {
         public HomeVM homeVM { get; set; }
         private readonly IMarketForecaster _marketForecaster;
-        private readonly StripeSettings _stripeOptions;
-        private readonly SendGridSettings _sendGridOptions;
-        private readonly TwilioSettings _twilioOptions;
+        //private readonly StripeSettings _stripeOptions;
+        //private readonly SendGridSettings _sendGridOptions;
+        //private readonly TwilioSettings _twilioOptions;
         private readonly WazeForecastSettings _wazeOptions;
 
         //Using constructor injection
