@@ -15,7 +15,6 @@ namespace WazeCredit.Controllers
         }
         public IActionResult Index()
         {
-            ;
             MarketForecasterV2 marketForecaster = new MarketForecasterV2();
             MarketResult currentMarket = marketForecaster.GetMarketPrediction();
 
