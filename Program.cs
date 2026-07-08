@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 //builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
-builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
 //builder.Services.AddSingleton<IMarketForecaster>(new MarketForecasterV2());//this can done while using only singleton as it will create one instance at starting and also we are using here "new" keyword
 
 ////Use below way when we don't have abstraction
@@ -36,7 +36,11 @@ builder.Services.AddScoped<ScopedService>();
 builder.Services.AddSingleton<SingletonService>();
 //TryAdd() - checks whether the implementation for this service is already exist and if exist then it will not register the new implementation
 //TryAdd() is an extension method provided by Microsoft.Extensions.DependencyInjection.Extensions that registers a service only if a service of that type has not already been registered.
-builder.Services.TryAddTransient<IMarketForecaster, MarketForecaster>();
+//builder.Services.TryAddTransient<IMarketForecaster, MarketForecaster>();
+
+//Below is the way to register same service multiple times
+builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
