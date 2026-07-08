@@ -20,6 +20,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 //builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
 builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.AddSingleton<IMarketForecaster>(new MarketForecasterV2());//this can done while using only singleton as it will create one instance at starting and also we are using here "new" keyword
+
+////Use below way when we don't have abstraction
+//builder.Services.AddTransient<MarketForecasterV2>();
+//builder.Services.AddSingleton(new MarketForecasterV2());
+
+////Use below way when we have implementation only
+//builder.Services.AddTransient(typeof(MarketForecasterV2));
+//builder.Services.AddTransient(typeof(IMarketForecaster), typeof(MarketForecasterV2));
 
 builder.Services.AddTransient<TransientService>();
 builder.Services.AddScoped<ScopedService>();
