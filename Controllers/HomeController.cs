@@ -9,14 +9,15 @@ namespace WazeCredit.Controllers
     public class HomeController : Controller
     {
         public HomeVM homeVM { get; set; }
-        public HomeController()
+        private readonly IMarketForecaster _marketForecaster;
+        public HomeController(IMarketForecaster marketForecaster)
         {
             homeVM = new HomeVM();
+            _marketForecaster = marketForecaster;
         }
         public IActionResult Index()
         {
-            MarketForecasterV2 marketForecaster = new MarketForecasterV2();
-            MarketResult currentMarket = marketForecaster.GetMarketPrediction();
+            MarketResult currentMarket = _marketForecaster.GetMarketPrediction();
 
             switch (currentMarket.MarketCondition)
             {
