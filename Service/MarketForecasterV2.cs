@@ -2,7 +2,7 @@
 
 namespace WazeCredit.Service
 {
-    public class MarketForecaster
+    public class MarketForecasterV2
     {
         public MarketResult GetMarketPrediction()
         {
@@ -11,7 +11,7 @@ namespace WazeCredit.Service
 
             return new MarketResult
             {
-                MarketCondition = MarketCondition.StableUp
+                MarketCondition = MarketCondition.Volatile
             };
         }
     }
