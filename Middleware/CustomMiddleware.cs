@@ -11,6 +11,8 @@ namespace WazeCredit.Middleware
             _next = next;
         }
 
+
+        //This InvokeAsync() method is used if we want to perform any custom logic like Authorization or Logging
         public async Task InvokeAsync(HttpContext context, TransientService transientService, 
             ScopedService scopedService, SingletonService singletonService)
         {
