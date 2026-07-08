@@ -19,6 +19,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
 //builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
 //builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
 //builder.Services.AddSingleton<IMarketForecaster>(new MarketForecasterV2());//this can done while using only singleton as it will create one instance at starting and also we are using here "new" keyword
@@ -39,8 +40,19 @@ builder.Services.AddSingleton<SingletonService>();
 //builder.Services.TryAddTransient<IMarketForecaster, MarketForecaster>();
 
 //Below is the way to register same service multiple times
-builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
+
+//Below is the way to replace registration
+//builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.Replace(ServiceDescriptor.Transient<IMarketForecaster, MarketForecaster>());
+
 builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
+
+//RemoveAll<> - if we want to remove all the implemenatations    
+//builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
+//builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
+//builder.Services.RemoveAll<IMarketForecaster>();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
