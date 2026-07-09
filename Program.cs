@@ -58,6 +58,10 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddAppSettingsConfig(builder.Configuration);
 
+builder.Services.AddScoped<IValidationChecker, AddressValidationChecker>();
+builder.Services.AddScoped<IValidationChecker, CreditValidationChecker>();
+builder.Services.AddScoped<ICreditValidator, CreditValidator>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
