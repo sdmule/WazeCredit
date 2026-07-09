@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WazeCredit.Data;
 using WazeCredit.Middleware;
+using WazeCredit.Models;
 using WazeCredit.Service;
 using WazeCredit.Service.LifeTimeExample;
 using WazeCredit.Utility.AppSettingsClasses;
@@ -53,6 +54,18 @@ builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
 //builder.Services.AddTransient<IMarketForecaster, MarketForecasterV2>();
 //builder.Services.AddTransient<IMarketForecaster, MarketForecaster>();
 //builder.Services.RemoveAll<IMarketForecaster>();
+
+builder.Services.AddScoped<CreditApprovedHigh>();
+builder.Services.AddScoped<CreditApprovedLow>();
+builder.Services.AddScoped<Func<CreditApprovedEnum, ICreditApproved>>(ServiceProvider => range =>
+{
+    switch (range)
+    {
+        case CreditApprovedEnum.High: return ServiceProvider.GetService<CreditApprovedHigh>();
+        case CreditApprovedEnum.Low: return ServiceProvider.GetService<CreditApprovedLow>();
+        default: return ServiceProvider.GetService<CreditApprovedLow>();
+    }
+});
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
