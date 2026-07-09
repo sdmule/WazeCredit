@@ -14,12 +14,12 @@ namespace WazeCredit.Data.Repository
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _db.Dispose();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _db.SaveChanges();
         }
     }
 }

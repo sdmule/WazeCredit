@@ -1,4 +1,6 @@
-﻿using WazeCredit.Models;
+﻿using WazeCredit.Data.Repository;
+using WazeCredit.Data.Repository.IRepository;
+using WazeCredit.Models;
 using WazeCredit.Service;
 using WazeCredit.Service.LifeTimeExample;
 using WazeCredit.Utility.AppSettingsClasses;
@@ -26,6 +28,7 @@ namespace WazeCredit.Utility.DI_Config
             services.AddTransient<TransientService>();
             services.AddScoped<ScopedService>();
             services.AddSingleton<SingletonService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //TryAdd() - checks whether the implementation for this service is already exist and if exist then it will not register the new implementation
             //TryAdd() is an extension method provided by Microsoft.Extensions.DependencyInjection.Extensions that registers a service only if a service of that type has not already been registered.
             //builder.Services.TryAddTransient<IMarketForecaster, MarketForecaster>();

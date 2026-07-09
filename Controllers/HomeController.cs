@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using WazeCredit.Data;
+using WazeCredit.Data.Repository.IRepository;
 using WazeCredit.Models;
 using WazeCredit.Models.ViewModel;
 using WazeCredit.Service;
@@ -14,7 +15,7 @@ namespace WazeCredit.Controllers
         public HomeVM homeVM { get; set; }
         private readonly IMarketForecaster _marketForecaster;
         private readonly ICreditValidator _creditValidator;
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
         //private readonly StripeSettings _stripeOptions;
         //private readonly SendGridSettings _sendGridOptions;
         //private readonly TwilioSettings _twilioOptions;
@@ -43,14 +44,14 @@ namespace WazeCredit.Controllers
         public HomeController(IMarketForecaster marketForecaster,
             IOptions<WazeForecastSettings> wazeOptions,
             ICreditValidator creditValidator,
-            ApplicationDbContext db,
+            IUnitOfWork unitOfWork,
             ILogger<HomeController> logger)
         {
             homeVM = new HomeVM();
             _marketForecaster = marketForecaster;
             _wazeOptions = wazeOptions.Value;
             _creditValidator = creditValidator;
-            _db = db;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
         public IActionResult Index()
@@ -144,8 +145,8 @@ namespace WazeCredit.Controllers
                         ).GetCreditApproved(CreditModel);
 
                     //add record to database
-                    _db.CreditApplications.Add(CreditModel);
-                    _db.SaveChanges();
+                    _unitOfWork.CreditApplication.Add(CreditModel);
+                    _unitOfWork.Save();
                     creditResult.CreditID = CreditModel.Id;
                     creditResult.CreditApproved = CreditModel.CreditApproved;
                     return RedirectToAction(nameof(CreditResult), creditResult);
