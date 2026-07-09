@@ -19,6 +19,7 @@ namespace WazeCredit.Controllers
         //private readonly SendGridSettings _sendGridOptions;
         //private readonly TwilioSettings _twilioOptions;
         private readonly WazeForecastSettings _wazeOptions;
+        private readonly ILogger _logger;
         [BindProperty]
         public CreditApplication CreditModel { get; set; }//we have changed it from Private to Public to Bind Property
 
@@ -42,16 +43,19 @@ namespace WazeCredit.Controllers
         public HomeController(IMarketForecaster marketForecaster,
             IOptions<WazeForecastSettings> wazeOptions,
             ICreditValidator creditValidator,
-            ApplicationDbContext db)
+            ApplicationDbContext db,
+            ILogger<HomeController> logger)
         {
             homeVM = new HomeVM();
             _marketForecaster = marketForecaster;
             _wazeOptions = wazeOptions.Value;
             _creditValidator = creditValidator;
             _db = db;
+            _logger = logger;
         }
         public IActionResult Index()
         {
+            _logger.LogInformation("Home controller index action called");
             MarketResult currentMarket = _marketForecaster.GetMarketPrediction();
 
             switch (currentMarket.MarketCondition)
@@ -69,7 +73,7 @@ namespace WazeCredit.Controllers
                     homeVM.MarketForecast = "Apply for a credit card using our application!";
                     break;
             }
-
+            _logger.LogInformation("Home controller index action ended");
             return View(homeVM);
         }
 

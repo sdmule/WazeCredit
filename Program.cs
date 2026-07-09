@@ -75,6 +75,8 @@ builder.Services.AddScoped<IValidationChecker, AddressValidationChecker>();
 builder.Services.AddScoped<IValidationChecker, CreditValidationChecker>();
 builder.Services.AddScoped<ICreditValidator, CreditValidator>();
 
+builder.Logging.AddFile("logs/creditApp-log-{Date}.txt");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
