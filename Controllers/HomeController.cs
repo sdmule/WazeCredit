@@ -18,7 +18,7 @@ namespace WazeCredit.Controllers
         //private readonly TwilioSettings _twilioOptions;
         private readonly WazeForecastSettings _wazeOptions;
         [BindProperty]
-        private CreditApplication CreditModel { get; set; }
+        public CreditApplication CreditModel { get; set; }//we have changed it from Private to Public to Bind Property
 
         //Using constructor injection
         //public HomeController(
